@@ -1,0 +1,279 @@
+﻿@page "/"
+
+
+<head>
+    <style>
+        html, body {
+        height: 100%;
+        margin: 0;
+        display: block; /* Kein Flex hier – wichtig! */
+        }
+
+        body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: center; */
+        /* height: 100vh; /* Seite komplett ausfüllen */
+        }
+
+        /* Container für die drei Spalten */
+        .spalten-container {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        /* margin-top: auto; /* Oben dynamisch */
+        margin-bottom: auto; /* Unten dynamisch – vertikal zentriert */
+        }
+
+        /* Jede einzelne Spalte */
+        .spalte {
+        display: flex;
+        flex-direction: column; /* Untereinander anordnen */
+        gap: 10px; /* Abstand zwischen Buttons */
+        }
+
+        /* Jede einzelne Spalte */
+        .midspalte {
+        display: flex;
+        flex-direction: column; /* Untereinander anordnen */
+        gap: 100px; /* Abstand zwischen Buttons */
+        }
+
+        /* Abstand nur vor dem zweiten Button in der ersten Spalte */
+        .gamebtn-gap {
+        margin-top: 10px; /* Abstand nach oben */
+        padding: 0;
+        border: none;
+        box-sizing: border-box; /* wichtig, damit width/height genau passen */
+        background-color: black; /* oder wie du willst */
+        }
+
+        .gamebtn {
+        padding: 0;
+        margin: 0;
+        border: none;
+        box-sizing: border-box; /* wichtig, damit width/height genau passen */
+        background-color: black; /* oder wie du willst */
+        }
+
+        .gap-spalte {
+        display: flex;
+        flex-direction: column; /* Untereinander anordnen */
+        gap: 10px; /* Abstand zwischen Buttons */
+        margin-left: 20px;
+        }
+
+        .menutbn {
+        box-sizing: border-box; /* wichtig, damit width/height genau passen */
+        width: auto;
+        height: auto;
+        background-color: gray; /* oder wie du willst */
+        color: goldenrod;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        }
+
+        .button-container {
+        margin-top: 10px;
+        margin-bottom: 4px; /* Abstand zwischen Buttons und Spalten */
+        }
+
+        .optionalspace {
+        color: black;
+        font-family: 'Courier New', Courier, monospace;
+        width: 50vh;
+        overflow: hidden;
+        visibility: hidden; /* nur unsichtbar, aber Platz bleibt erhalten */
+        }
+
+        .headertext {
+        color: black;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        }
+
+
+        .tutorialtext.visible {
+        visibility: visible;
+        }
+
+        .menutbn.visible {
+        visibility: visible;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <h3 class="headertext">@headertext</h3>
+    </div>
+    <div class="button-container">
+        <button @onclick="() => OnLevelClick(1)" class="menutbn @(levelsVisible ? "visible" : "")"> lvl 1 </button>
+        <button @onclick="() => OnLevelClick(2)" class="menutbn @(levelsVisible ? "visible" : "")"> lvl 2 </button>
+        <button @onclick="() => OnLevelClick(3)" class="menutbn @(levelsVisible ? "visible" : "")"> lvl 3 </button>
+        <button @onclick="() => OnLevelClick(4)" class="menutbn @(levelsVisible ? "visible" : "")"> lvl 4 </button>
+        <button @onclick="() => OnLevelClick(5)" class="menutbn @(levelsVisible ? "visible" : "")"> lvl 5 </button>
+    </div>
+    <div class="button-container">
+        <button class="menutbn" @onclick=OnTutorialClick> tutorial </button>
+    </div>
+    <div class="button-container">
+        <p class="optionalspace @(tutorialVisible ? "visible" : "")">@tutorialtext</p>
+    </div>
+
+
+    <div class="spalten-container">
+        <!-- Col1 -->
+        <div class="spalte">
+            <button @onclick="() => OnClick(3)" class="gamebtn-gap" style="width:10px; height:100px;background:@Game.Timebuttons[3].Color;border:@Game.Timebuttons[3].Border"></button>
+            <button @onclick="() => OnClick(5)" class="gamebtn" style="width:10px; height:100px;background:@Game.Timebuttons[5].Color;border:@Game.Timebuttons[5].Border"></button>
+        </div>
+
+        <!-- Col2 -->
+        <div class="midspalte">
+            <button @onclick="() => OnClick(0)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[0].Color;border:@Game.Timebuttons[0].Border"></button>
+            <button @onclick="() => OnClick(1)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[1].Color;border:@Game.Timebuttons[1].Border"></button>
+            <button @onclick="() => OnClick(2)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[2].Color;border:@Game.Timebuttons[2].Border"></button>
+        </div>
+
+        <!-- Col3 -->
+        <div class="spalte">
+            <button @onclick="() => OnClick(4)" class="gamebtn-gap" style="width:10px; height:100px;background:@Game.Timebuttons[4].Color;border:@Game.Timebuttons[4].Border"></button>
+            <button @onclick="() => OnClick(6)" class="gamebtn" style="width:10px; height:100px;background:@Game.Timebuttons[6].Color;border:@Game.Timebuttons[6].Border"></button>
+        </div>
+
+        <!-- Col4 -->
+        <div class="gap-spalte">
+            <button @onclick="() => OnClick(10)" class="gamebtn-gap" style="width:10px; height:100px;background:@Game.Timebuttons[10].Color;border:@Game.Timebuttons[10].Border"></button>
+            <button @onclick="() => OnClick(12)" class="gamebtn" style="width:10px; height:100px;background:@Game.Timebuttons[12].Color;border:@Game.Timebuttons[12].Border"></button>
+        </div>
+
+        <!-- Col5 -->
+        <div class="midspalte">
+            <button @onclick="() => OnClick(7)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[7].Color;border:@Game.Timebuttons[7].Border"></button>
+            <button @onclick="() => OnClick(8)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[8].Color;border:@Game.Timebuttons[8].Border"></button>
+            <button @onclick="() => OnClick(9)" class="gamebtn" style="width:80px; height:10px;background:@Game.Timebuttons[9].Color;border:@Game.Timebuttons[9].Border"></button>
+        </div>
+
+        <!-- Col6 -->
+        <div class="spalte">
+            <button @onclick="() => OnClick(11)" class="gamebtn-gap" style="width:10px; height:100px;background:@Game.Timebuttons[11].Color;border:@Game.Timebuttons[11].Border"></button>
+            <button @onclick="() => OnClick(13)" class="gamebtn" style="width:10px; height:100px;background:@Game.Timebuttons[13].Color;border:@Game.Timebuttons[13].Border"></button>
+        </div>
+    </div>
+
+</body>
+
+
+@code {
+    private System.Timers.Timer _gameTimer;
+    private Game Game = new Game(0);
+
+    private bool levelsVisible = false;
+    private bool tutorialVisible = false;
+    private bool scoreVisible = false;
+    private int currentlevel = 0;
+
+    private string headertext = "choose level";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            headertext = "choose level";
+            NewGame(0);
+            StartGameTimer();
+        }
+    }
+
+    private void NewGame(int level)
+    {
+        currentlevel = level;
+        Game = new Game(level);
+        if (level > 0)
+            headertext = $"Now playing level {level}";
+    }
+
+    private void StartGameTimer()
+    {
+        _gameTimer = new System.Timers.Timer(100); // Intervall 10 ms
+        _gameTimer.Elapsed += async (sender, e) =>
+        {
+            await UpdateGame();
+        };
+        _gameTimer.AutoReset = true;
+        _gameTimer.Enabled = true;
+    }
+
+    private async Task UpdateGame()
+    {
+        if (Game.SwitchActive != null)
+        {
+            TimeSpan diff = DateTime.Now - Game.SwitchActive.Value;
+            if (Math.Abs(diff.TotalMilliseconds) > 500)
+                Game.SwitchOff();
+        }
+
+        if (currentlevel > 0 && Game.IsGameFinished())
+        {
+            headertext = $"Congrats. You finished Level {currentlevel} in {Game.ScoreTimer.Elapsed.TotalSeconds} s.";
+        }
+
+        // headertext = Game.val_0.ToString() + Game.val_1.ToString() + ":" + Game.val_2.ToString() + Game.val_3.ToString() + ":" + Game.val_4.ToString() + Game.val_5.ToString();
+
+        // UI aktualisieren (nur wenn nötig)
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task OnClick(int buttonid)
+    {
+        if (Game.Timebuttons[buttonid].IsClicked)
+        {
+            Game.Timebuttons[buttonid].IsClicked = false;
+            Game.ActiveButtonId = null;
+        }
+
+        else
+        {
+            Game.Timebuttons[buttonid].IsClicked = true;
+            if (Game.ActiveButtonId == null)
+                Game.ActiveButtonId = buttonid;
+            else
+            {
+                Game.SwitchButtonStates(Game.ActiveButtonId.Value, buttonid);
+            }
+        }
+    }
+
+    public async Task OnLevelClick(int level)
+    {
+        NewGame(level);
+        levelsVisible = false;
+    }
+
+    public async Task OnNewGameClick()
+    {
+        if (levelsVisible == false)
+            levelsVisible = true;
+        else levelsVisible = false;
+    }
+
+    public async Task OnTutorialClick()
+    {
+        if (tutorialVisible == false)
+            tutorialVisible = true;
+        else tutorialVisible = false;
+    }
+
+    private string tutorialtext = "When you start a new game, the second counter on your screen will change.\n" +
+    "The level you choose is equal to the number of segments that will randomly switch positions.\n" +
+    "Complete the level by switching all the segments back to their correct position by clicking on them.\n" +
+    "That's it. You can also try the sophisticated controls before starting the game.";
+
+    public void Dispose()
+    {
+        _gameTimer?.Dispose();
+    }
+}
